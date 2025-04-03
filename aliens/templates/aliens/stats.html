@@ -1,0 +1,22 @@
+{% extends "aliens/layout.html" %}
+
+{% load static %}
+{% block body %}
+    <h1>Player stats</h1>
+
+    
+ 
+    <li>
+        <ul>
+            <p>Total kills:{{ player_stats.total_kills }}</p>
+            <p>Total deaths loser:{{ player_stats.total_deaths }}</p>
+            <p>Total bullets fired:{{ player_stats.total_bullets_fired }}</p>
+            <p>Total games, get a life:{{ player_stats.total_games }}</p>
+            <p>Rank:{{ player_stats.rank }}</p>
+            <p>KD ratio:{{ player_stats.kd_ratio}} </p>    
+        </ul>
+    </li>
+
+
+    <script src="{% static 'aliens/game.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% csrf_token %}
+    <title>Typing Space Invaders</title>
+    <link href="{% static 'aliens/gamestyle.css' %}" rel="stylesheet">
+    
+</head>
+<body id="game-body">
+    <div id='stats-user-id' data-stats-user-id="{% if request.user.is_authenticated %} {{ request.user.id }} {% endif %}"></div>
+
+    <div id="game-container">
+        <canvas id="game-canvas" width="1000" height="800"></canvas>
+
+        <div id="story-container">
+            <p id="story-text">Defend Earth from the alien invasion!</p>
+            <input type="text" id="typing-input" placeholder="Type here..." autofocus>
+        </div>
+
+        <div id="health-container">Health: 20</div>
+
+        <div id="kills-container">Kills: 0</div>
+
+        <div id="bullets-container">Bullets Fired: 0</div>
+
+        <div id="button-container">
+            <button id="previous-level-button">Previous Level</button>
+            <button id="next-level-button">Next Level</button>
+        </div>
+
+        <div id="upgrade-container">
+
+            <div class="upgrade-option" data-upgrade="Homing Missile">
+                <span>Homing Missile</span>
+            </div>
+
+            <div class="upgrade-option" data-upgrade="Laser of Doom">
+                <span>Laser of Doom</span>
+            </div>
+
+            <div class="upgrade-option" data-upgrade="Mini Gun">
+                <span>Mini Gun</span>
+            </div>
+        </div>
+    </div>
+
+    <a id="play-again" href="{% url 'game' %}">You let the world burn, try again?</a>
+
+    {% if user.is_authenticated %}
+        <a id="stat-page" href="{% url 'players_stats' user.id %}">View Your Stats</a>
+    {% endif %}
+
+{% comment "" %} if this doess not work just send the user object in the context of the view {% endcomment %}
+    <script src="{% static 'aliens/game.js' %}"></script>
+</body>
+</html>

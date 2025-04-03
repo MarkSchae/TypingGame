@@ -1,0 +1,272 @@
+#game-body { 
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+#game-container {
+    position: relative;
+    text-align: center;
+}
+
+#story-container {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#typing-input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+#game-canvas {
+    border: 2px solid #fff;
+}
+
+#health-container, #bullets-container, #kills-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+#bullets-container {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    font-size: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+#kills-container {
+    position: absolute;
+    top: 90px;
+    left: 10px;
+    font-size: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+#button-container {
+    position: absolute;
+    bottom: 100px;
+    right: 10px;
+}
+
+#next-level-button, #previous-level-button {
+    font-size: 16px;
+    padding: 10px;
+    margin: 5px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#next-level-button:hover, #previous-level-button:hover {
+    background-color: #666;
+}
+
+#upgrade-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.upgrade-option {
+    background-color: gray;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    margin: 20px;
+}
+
+.upgrade-option:hover {
+    background-color: darkgray;
+}
+
+.upgrade-option span {
+    font-size: 24px;
+    color: white;
+}
+
+#stats-user-id {
+    display: none;
+}
+
+#stat-page {
+    display: none;
+}
+
+#play-again {
+    display: none;
+}
+/* General table styling */
+#leaderboard-table {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+#leaderboard-table caption h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+#leaderboard-table th, 
+#leaderboard-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+#leaderboard-table thead th {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 18px;
+}
+
+#leaderboard-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#leaderboard-table tbody tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+#leaderboard-table tbody td {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Rank column specific styling */
+#leaderboard-table tbody td:first-child {
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+/* Gamertag and skill rating styling */
+#leaderboard-table tbody td:nth-child(2) {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#leaderboard-table tbody td:nth-child(3) {
+    color: #ff9800;
+}
+
+/* Add some responsiveness */
+@media (max-width: 600px) {
+    #leaderboard-table, 
+    #leaderboard-table caption h1, 
+    #leaderboard-table th, 
+    #leaderboard-table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+
+/* General Table Styling */
+#help-wanted-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Table Header Styling */
+#help-wanted-table thead {
+    background-color: #4CAF50; 
+    color: white;
+    text-align: left;
+}
+
+#help-wanted-table th {
+    padding: 12px 15px;
+    font-size: 16px;
+}
+
+/* Table Body Styling */
+#help-wanted-table tbody {
+    background-color: #f9f9f9; 
+}
+
+#help-wanted-table td {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd; 
+}
+
+/* Hover Effect */
+#help-wanted-table tbody tr:hover {
+    background-color: #f1f1f1; 
+    cursor: pointer;
+}
+
+/* Links Styling */
+#help-wanted-table a {
+    color: #007BFF; 
+    text-decoration: none;
+}
+
+#help-wanted-table a:hover {
+    text-decoration: underline; 
+}
+
+/* Smaller Screens */
+@media (max-width: 768px) {
+    #help-wanted-table {
+        width: 100%;
+        font-size: 12px;
+    }
+    
+    #help-wanted-table th, #help-wanted-table td {
+        padding: 8px 10px;
+    }
+}
+
+/* For screens smaller than 768px */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+    }
+    .main-content {
+        padding: 10px;
+    }
+}

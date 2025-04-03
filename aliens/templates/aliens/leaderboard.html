@@ -1,0 +1,65 @@
+{% extends "aliens/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+
+    {% for user in sorted_leaderboard %}
+        <li>
+            User: {{ user.user }}
+            <ul>
+                Rank: {{ user.rank }}
+                Skill rating: {{ user.user_skill_rating }}
+            </ul>
+        </li>
+    {% endfor %}
+I want a href somewhere here that allows the user to click on any other user on the leaderboard and be taken to their profile and stats pages
+    <h1>Leaderboard</h1>
+    
+    <table id="leaderboard-table">
+        <caption><h1>Leaderboard</h1></caption>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Gamertag</th>
+                <th>Skill Rating</th>
+            </tr>
+        </thead>
+
+        <tbody id="leaderboard-body">
+            <!-- Rows data will be dynamically added here -->
+            {% for instance in sorted_leaderboard %}
+                <tr>
+                    <td>{{ instance.rank }}</td>
+                    <td>{{ instance.user.gamertag }}</td>
+                    <td>{{ instance.user_skill_rating }}</td> 
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+
+    <div id='post_form'>
+        <h1>New Post</h1>
+        <form method="post" action="{% url 'leaderboard' %}">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Post">
+        </form>
+    </div>
+
+    <div id='posts'>
+        <h1>Posts/Comments</h1>
+        {% for post in posts %}
+            <li>
+                {{ post.user }}
+                {{ post.content }}
+                {{ post.created_at }}
+            </li>
+        {% empty %}
+        <ul>No Posts yet</ul>
+        {% endfor %}
+    </div>
+
+    <script src="{% static 'aliens/stats.js' %}"></script>
+{% endblock %}

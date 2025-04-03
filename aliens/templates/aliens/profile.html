@@ -1,0 +1,80 @@
+{% extends "aliens/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+
+    need to make a submit form here for mails 
+    also i think i am going to use this page to display the users profile 
+    do not forget to use the users gamertag for sending mails etc 
+
+    <p>{{ onclick_user_profile.username }}</p>
+    <p>{{ current_logged_on_user.username }}</p>
+    <div data-user-id="{{ current_logged_on_user.id }}" style="display: none;" id="user-id"></div>
+
+    <img id="profile-pic" src="{{ user.profile_pic.url }}" alt="Profile Pic" style="width: 150px; height: 150px; object-fit: cover;">
+
+
+    {% comment "" %}
+     Need to add some hiding features here. So I need to hide certian elements that I do not want a user that is viewing another users profile to see 
+     This can be done by incasing the elements in a if statment:
+     {% if user.username == current_logged_on_user.username %} When clicking on another persons profile link the user_id sent will be different to the user.id which is the reques.user id (the user that clicked the link)
+        Add elements here 
+     {% endif %}
+    {% endcomment %}
+
+    <h1>Change profile Pic</h1>
+    <input type="file" name="change-image" accept="image/*" id="change-image">
+    <button id="confirm-update-btn">Confirm Profile Picture</button>
+
+    <li>
+        <p>{{ user.gamertag }}</p>
+        <p>{{ user.username }}</p>
+        <p>{{ user.country }}</p>
+    </li>
+
+    <button id='delete-account'>Delete Account</button>
+        
+            {% comment %}
+                        {% for mail in mails %}
+            <p>{{ mail.recipients }}</p>
+            <p>{{ mail.subject }}</p>
+            <p>{{ mail.body }}</p>
+            <p>{{ mail.sender }}</p>
+        {% empty %}
+            <li>
+                Not the droids you where looking for
+            </li>
+        {% endfor%}
+        </li>
+            {% endcomment %}
+
+    <button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
+    <button class="btn btn-sm btn-outline-primary" id="compose">Compose</button>
+    <button class="btn btn-sm btn-outline-primary" id="sent">Sent</button>
+
+    <div id="mails-view"></div>
+
+    <div id="compose-view">
+        <h3>New Mail</h3>
+        <form id="compose-form">
+            {% csrf_token %}
+            <div class="form-group">
+                From: <input disabled class="form-control" value="{{ request.user.gamertag }}">
+            </div>
+            <div class="form-group">
+                To Gamertag: <input id="compose-recipients" class="form-control">
+            </div>
+            <div class="form-group">
+                <input class="form-control" id="compose-subject" placeholder="Subject">
+            </div>
+            <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
+            <input type="submit" class="btn btn-primary"/>
+        </form>
+    </div>
+
+    <div id="details-mails">
+
+
+    <script src="{% static 'aliens/stats.js' %}"></script>
+{% endblock %}

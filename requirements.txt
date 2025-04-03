@@ -1,0 +1,6 @@
+install pillow
+install daphne
+install reddis_channels
+
+docker run --rm -p 6379:6379 redis:7(required for websocket functionality) 
+python3 manage.py runserver

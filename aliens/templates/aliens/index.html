@@ -1,0 +1,15 @@
+{% extends "aliens/layout.html" %}
+
+{% block body %}
+
+    <h1>Can you save the world?</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div>{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    
+
+{% endblock %}
