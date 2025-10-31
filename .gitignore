@@ -1,0 +1,69 @@
+# === General ignore file for now ===
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+
+# === Virtual Environments ===
+venv/
+env/
+.venv/
+.env/
+
+# === Django ===
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
+.env
+.DS_Store
+
+# === IDEs & Editors ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === OS Files ===
+Thumbs.db
+.DS_Store
+
+# === Migrations (optional if you want to ignore generated ones) ===
+# Uncomment if you don’t want to commit auto-generated migrations
+# */migrations/
+# !*/migrations/__init__.py
+
+# === Byte-compiled / optimized / DLL files ===
+*.so
+*.dll
+*.exe
+
+# === Coverage / Testing ===
+htmlcov/
+.tox/
+.nox/
+.coverage
+.cache
+pytest_cache/
+coverage.xml
+
+# === Docker ===
+*.pid
+*.seed
+*.pid.lock
+
+# === Node (if using npm/yarn for frontend) ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+
+# === Compiled Static Assets ===
+*.map

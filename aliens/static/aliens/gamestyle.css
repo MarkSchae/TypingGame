@@ -1,3 +1,65 @@
+/* Sleek clickable nav styling for Bootstrap */
+.nav {
+    justify-content: center; /* center nav items */
+    gap: 1rem; /* space between items */
+    margin-bottom: 1.5rem;
+}
+
+.nav-link {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #333; /* text color */
+    background-color: #f8f9fa; /* light button-like background */
+    border: 1px solid #ddd; /* subtle border */
+    border-radius: 0.5rem; /* rounded edges */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer; /* show hand cursor */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* subtle depth */
+}
+
+.nav-link:hover {
+    color: #fff; /* text color on hover */
+    background-color: #007bff; /* hover background */
+    transform: translateY(-2px); /* pop-up effect */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); /* deeper shadow */
+}
+
+.nav-link:active {
+    transform: translateY(0); /* reset position on click */
+    background-color: #0056b3; /* darker active color */
+}
+
+.nav-link:disabled {
+    color: #aaa; /* muted disabled color */
+    background-color: #f0f0f0;
+    border-color: #ccc;
+    pointer-events: none;
+}
+
+/* Style the datalist options like a dropdown */
+#room-name-input {
+    position: relative;
+}
+
+/* Browsers don’t style datalist by default, so we mimic it */
+#games-list {
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0.25rem;
+}
+
+/* Optional: highlight hovered option (works in some browsers) */
+#games-list option:hover {
+    background-color: #e9ecef;
+    cursor: pointer;
+}
+
 #game-body { 
     margin: 0;
     display: flex;
@@ -270,3 +332,5 @@
         padding: 10px;
     }
 }
+
+

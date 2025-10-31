@@ -27,76 +27,101 @@
 {% load static %}
 
 {% block body %}
-    <form action="{% url 'help_wanted'  %}" method="post" id="help-table">
+<div class="container my-5">
+
+    <!-- Help Form -->
+    <h2 class="mb-4 text-center">Ask for Help</h2>
+    <form action="{% url 'help_wanted' %}" method="post" id="help-table" class="mb-5 p-4 shadow-sm rounded bg-light">
         {% csrf_token %}
-        <div>
-            <input class="form-control" autofocus type="text" name="table-gamertag" placeholder="Gamertag" value="{{ user_info.gamertag }}" readonly> 
+        <div class="mb-3">
+            <input class="form-control" type="text" name="table-gamertag" placeholder="Gamertag" value="{{ user_info.gamertag }}" readonly>
         </div>
-        <div>
-            <input class="form-control" autofocus type="text" name="table-help-game" placeholder="What game do you need help with?">
+        <div class="mb-3">
+            <input class="form-control" type="text" name="table-help-game" placeholder="What game do you need help with?">
         </div>
-        <div>
-            <input class="form-control" autofocus type="text" name="table-help-game-day" placeholder="When are you free to game?">
+        <div class="mb-3">
+            <input class="form-control" type="text" name="table-help-game-day" placeholder="When are you free to game?">
         </div>
-        <div>
-            <input class="form-control" autofocus type="text" name="table-profile-link" placeholder="Username" value="{{ user_info.username }}" readonly>
+        <div class="mb-3">
+            <input class="form-control" type="text" name="table-profile-link" placeholder="Username" value="{{ user_info.username }}" readonly>
         </div>
-        <input class="btn btn-primary" type="submit" value="Ask for Help">
+        <button type="submit" class="btn btn-primary w-100">Ask for Help</button>
     </form>
 
-    <div id="test_id">{{ user_info.id }}</div>
-    <script>
-        const user_id = document.getElementById('test_id').textContent;
-        console.log(user_id);
-    </script>
+    <!-- Weather Check Button -->
+    <div class="text-center mb-4">
+        <button id="weather-check" class="btn btn-outline-info">
+            <div id="weather">Check the best day to play games! Good luck!</div>
+        </button>
+    </div>
 
-    <button id="weather-check">
-        <div id="weather">Have a look for the best day to play games. Good luck!</div>
-    </button>
-    
-
-    <table id="help-wanted-table">
-        <thead>
-            <tr>
-                <th>Gamertag</th>
-                <th>Help needed with</th>
-                <th>Game Day!</th>
-                <th>Profile</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            {% for instance in help_table %}
+    <!-- Help Wanted Table -->
+    <h2 class="mb-3 text-center">Players Looking for Help</h2>
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
                 <tr>
-                    <td>{{ instance.gamertag }}</td>
-                    <td>{{ instance.game }}</td>
-                    <td>{{ instance.game_day }}</td>
-                    <td><a href="{% url 'player_profile' instance.user.id %}">Players Profile</a></td>
+                    <th scope="col">Gamertag</th>
+                    <th scope="col">Help Needed With</th>
+                    <th scope="col">Game Day</th>
+                    <th scope="col">Profile</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for instance in help_table %}
+                    <tr>
+                        <td>{{ instance.gamertag }}</td>
+                        <td>{{ instance.game }}</td>
+                        <td>{{ instance.game_day }}</td>
+                        <td>
+                            <a href="{% url 'player_profile' instance.user.id %}" class="btn btn-sm btn-outline-primary">
+                                View Profile
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <script src="{% static 'aliens/help.js' %}"></script>
+    <!-- Chat Room Entry -->
+    <div class="mt-5 p-4 shadow-sm rounded bg-light text-center">
+        <h3>Enter a Chat Room</h3>
+        <div class="input-group mb-3 justify-content-center">
+            <!-- Add the datalist -->
+            <input id="room-name-input" type="text" class="form-control w-50" placeholder="Chat room name" aria-label="Room Name" list="games-list">
+            <datalist id="games-list">
+                {% for instance in help_table %}
+                    <option value="{{ instance.game }}"></option>
+                {% endfor %}
+            </datalist>
+            <button id="room-name-submit" class="btn btn-primary">Enter</button>
+        </div>
+    </div>
+</div>
 
-    What chat room would you like to enter?<br>
-    <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+<!-- JS Scripts -->
+<script>
+    const user_id = document.getElementById('test_id')?.textContent;
+    console.log(user_id);
 
-    <script>
-        document.querySelector('#room-name-input').focus();
-        document.querySelector('#room-name-input').onkeyup = function(e) {
-            if (e.key === 'Enter') {  // enter, return
-                document.querySelector('#room-name-submit').click();
-            }
-        }; // This code effectivley triggers the button click on the submit button when the enter key is pressed 
+    document.querySelector('#room-name-input').focus();
+    document.querySelector('#room-name-input').onkeyup = function(e) {
+        if (e.key === 'Enter') {
+            document.querySelector('#room-name-submit').click();
+        }
+    };
 
-        document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input').value;
+    document.querySelector('#room-name-submit').onclick = function(e) {
+        const roomName = document.querySelector('#room-name-input').value.trim();
+        if(roomName) {
             window.location.pathname = '/aliens/chat/' + roomName;
-        };
-    </script>
+        }
+    };
+</script>
+<script src="{% static 'aliens/help.js' %}"></script>
 {% endblock %}
+
 {% comment "" %}
     From here we need to write the js to get the inputs and update the table without a page reload. Then we need to update the table
     in the newly created model. We also need to write the python in the backend to gain access to all the information and display the table on load. 

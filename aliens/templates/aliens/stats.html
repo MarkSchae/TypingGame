@@ -2,21 +2,45 @@
 
 {% load static %}
 {% block body %}
-    <h1>Player stats</h1>
+<div class="container my-5">
 
-    
- 
-    <li>
-        <ul>
-            <p>Total kills:{{ player_stats.total_kills }}</p>
-            <p>Total deaths loser:{{ player_stats.total_deaths }}</p>
-            <p>Total bullets fired:{{ player_stats.total_bullets_fired }}</p>
-            <p>Total games, get a life:{{ player_stats.total_games }}</p>
-            <p>Rank:{{ player_stats.rank }}</p>
-            <p>KD ratio:{{ player_stats.kd_ratio}} </p>    
-        </ul>
-    </li>
+    <h1 class="text-center mb-4">Player Stats</h1>
 
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4">
+                <h5 class="card-title mb-3 text-center">Statistics</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total Kills:</span>
+                        <strong>{{ player_stats.total_kills }}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total Deaths:</span>
+                        <strong>{{ player_stats.total_deaths }}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total Bullets Fired:</span>
+                        <strong>{{ player_stats.total_bullets_fired }}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total Games:</span>
+                        <strong>{{ player_stats.total_games }}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Rank:</span>
+                        <strong>{{ player_stats.current_position_leaderboard }}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>K/D Ratio:</span>
+                        <strong>{{ player_stats.kd_ratio }}</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-    <script src="{% static 'aliens/game.js' %}"></script>
+</div>
+
+<script src="{% static 'aliens/game.js' %}"></script>
 {% endblock %}

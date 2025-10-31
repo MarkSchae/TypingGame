@@ -243,8 +243,7 @@ def player_profile(request, user_id):
         # Comments on profile
         "onclick_user_profile" : onclick_user_profile,
         "current_logged_on_user": current_logged_on_user,
-        "mails": mails,
-        
+        "mails": mails,   
     })
 
 # Function to calculate a helo type of ranking system for the leaderboard
@@ -326,12 +325,14 @@ def players_stats(request, user_id):
             # Updates all users ranking on the leaderboard and saves their new rank
             ranking()
             updated_leaderboard.save()
+            # Update the users current rank for display
+            player_stats.current_position_leaderboard = updated_leaderboard.rank 
             # Return JsonResponse here, needs to first be serialized and include a success message
             
     try:
         player_stats = Stats.objects.get(user=user_id)
     except Stats.DoesNotExist:
-        messages.error(request, "You have no stats Noob!")
+        messages.error(request, "You have no stats yet, get playing!")
         return HttpResponseRedirect(reverse('index'))
     
     return render(request, "aliens/stats.html", { # This is called the context
