@@ -17,4 +17,4 @@ RUN python manage.py collectstatic --noinput
 ENV PYTHONUNBUFFERED=1
 
 # Run Daphne (ASGI server) on port 8080
-CMD ["daphne", "-b", "0.0.0.0", "-p", "8080", "myproject.asgi:application"]
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8080", "typgame.asgi:application"]
