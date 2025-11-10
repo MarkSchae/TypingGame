@@ -1,0 +1,9 @@
+Django==4.2
+gunicorn==20.1.0          # For production server
+pillow==10.1.0             # Image handling
+daphne==4.0.1              # ASGI server for Channels
+channels==4.1.0            # Django Channels
+channels_redis==4.1.0      # Redis backend for Channels
+psycopg2-binary==2.9.9     # PostgreSQL support
+dj-database-url==1.0.0     # Parse DATABASE_URL from env
+python-dotenv==1.0.0       # Optional, for local .env files
