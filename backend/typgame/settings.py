@@ -17,7 +17,7 @@ import dj_database_url
 
 # Allow only your frontend domain (replace with actual URL)
 CORS_ALLOWED_ORIGINS = [
-    "https://typing-to-freedom.netlify.app/",
+    "https://typing-to-freedom.netlify.app",
 ]
 
 # Optional if your fetch uses credentials/cookies
