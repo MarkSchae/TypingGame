@@ -94,7 +94,9 @@ def delete_account(request):
 
 # Create your views here.
 def index(request):
-    return render(request, "aliens/index.html")
+    return JsonResponse({
+        'title': "Welcome to Hell!"
+    })
 
 # Websockets test chat room raw functionality
 def room(request, room_name):

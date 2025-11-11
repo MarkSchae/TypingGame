@@ -10,7 +10,7 @@
         <link href="{% static 'aliens/gamestyle.css' %}" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-<body>
+<body id="main-content">
     <h1 class="text-center my-4">Alien Invaders</h1>
 
     {% if user.is_authenticated %}
@@ -72,6 +72,9 @@
 
     {% block body %}
     {% endblock %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nunjucks/3.2.4/nunjucks.min.js"></script>
+    <script src="/static/js/app.js" defer></script>
 </body>
 
 </html>
