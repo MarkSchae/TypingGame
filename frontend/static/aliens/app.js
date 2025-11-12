@@ -4,19 +4,27 @@ const env = new nunjucks.Environment(
   { autoescape: true }
 );
 
-// Generic render function for pages
 async function renderPage(endpoint, templateName, targetId) {
-  const res = await fetch(endpoint);
-  console.log(endpoint);
-  if (!res.ok) {
+  console.log("Fetching from:", endpoint);
+
+  try {
+    const res = await fetch(endpoint);
+    console.log("Response status:", res.status);
+
+    if (!res.ok) {
+      throw new Error(`Fetch failed: ${res.status}`);
+    }
+
+    const data = await res.json();
+    console.log("Fetched data:", data);
+
+    const rendered = env.render(templateName, data);
+    document.getElementById(targetId).innerHTML = rendered;
+
+  } catch (err) {
+    console.error("Error fetching or rendering:", err);
     document.getElementById(targetId).innerHTML = `<p>Failed to load page.</p>`;
-    return;
   }
-  const data = await res.json();
-  console.log(data);
-  const rendered = env.render(templateName, data);
-  console.log(templateName);
-  document.getElementById(targetId).innerHTML = rendered;
 }
 
 // Initial load
