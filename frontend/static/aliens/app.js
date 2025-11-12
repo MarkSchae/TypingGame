@@ -30,5 +30,5 @@ async function renderPage(endpoint, templateName, targetId) {
 // Initial load
 document.addEventListener("DOMContentLoaded", () => {
     console.log('is this running?');
-    renderPage("typinggame-production.up.railway.app/aliens/", "layout.njk", "main-content");
+    renderPage("https://typinggame-production.up.railway.app/aliens/", "layout.njk", "main-content");
 });
