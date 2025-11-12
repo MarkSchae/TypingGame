@@ -1,22 +1,26 @@
 // Setup Nunjucks loader
 const env = new nunjucks.Environment(
-  new nunjucks.WebLoader("../../templates/aliens"), // path to your .njk templates
+  new nunjucks.WebLoader("../../templates/aliens"), // path to .njk templates
   { autoescape: true }
 );
 
 // Generic render function for pages
 async function renderPage(endpoint, templateName, targetId) {
   const res = await fetch(endpoint);
+  console.log(endpoint);
   if (!res.ok) {
     document.getElementById(targetId).innerHTML = `<p>Failed to load page.</p>`;
     return;
   }
   const data = await res.json();
+  console.log(data);
   const rendered = env.render(templateName, data);
+  console.log(templateName);
   document.getElementById(targetId).innerHTML = rendered;
 }
 
 // Initial load
 document.addEventListener("DOMContentLoaded", () => {
-  renderPage("typinggame-production.up.railway.app/aliens", "index.njk", "main-content");
+    console.log('is this running?');
+    renderPage("typinggame-production.up.railway.app/aliens/", "index.njk", "main-content");
 });
