@@ -1,38 +1,11 @@
-{% extends "aliens/layout.html" %}
-
-{% comment %}
-    Need to make a table with players name and link to thier profile for players that are looking for either help with a game or just a friend to play co op through a game or a group to play a moba with
-    Create a table 
-    Input for players to input their info and which game they want help/teammates for 
-    Add a search/filter function for the table 
-    When players click on another players name/gamertag they must be taken to that players profile where they can add as a friend 
-    Can also link to sending a mail to a player on the board or another comment section 
-
-    Adding/removing button on player profile page, the button must have functionality to check if the person is already a friend or not, could also do that in the js 
-    Use Ajax to send a request to save the player as a new friend, create the field for friends in the models 
-    Use JS to update the button in real time from add friend to remove friend 
-    Based on the button text (add/remove) add a new relationship in the model or delete an existing one 
-    We could also use the url for the new help wanted page as apposed to the profile page, so have the button to add/remove on the help wanted page and handle all the backend via the url function that handles the help wanted page 
-{% endcomment %}
-
-{% comment %}
-    Need a input for the users information and what game they want help with. Use js to take the input and update the table 
-    Might need a new model for this table specifically so we can store the data here. Need to make a delete too 
-    A way to see only your adds so you can update or delete them 
-    Maybe a way to search certian games or users 
-    Might not need the username input as we can get access from the backend
-{% endcomment %}
-
-
-{% load static %}
+{% extends "aliens/layout.njk" %}
 
 {% block body %}
 <div class="container my-5">
 
     <!-- Help Form -->
     <h2 class="mb-4 text-center">Ask for Help</h2>
-    <form action="{% url 'help_wanted' %}" method="post" id="help-table" class="mb-5 p-4 shadow-sm rounded bg-light">
-        {% csrf_token %}
+    <form id="help-table-form" class="mb-5 p-4 shadow-sm rounded bg-light">
         <div class="mb-3">
             <input class="form-control" type="text" name="table-gamertag" placeholder="Gamertag" value="{{ user_info.gamertag }}" readonly>
         </div>
@@ -67,14 +40,14 @@
                     <th scope="col">Profile</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="help-table-body">
                 {% for instance in help_table %}
                     <tr>
                         <td>{{ instance.gamertag }}</td>
                         <td>{{ instance.game }}</td>
                         <td>{{ instance.game_day }}</td>
                         <td>
-                            <a href="{% url 'player_profile' instance.user.id %}" class="btn btn-sm btn-outline-primary">
+                            <a href="{{ instance.profile_url }}" class="btn btn-sm btn-outline-primary">
                                 View Profile
                             </a>
                         </td>
@@ -88,8 +61,7 @@
     <div class="mt-5 p-4 shadow-sm rounded bg-light text-center">
         <h3>Enter a Chat Room</h3>
         <div class="input-group mb-3 justify-content-center">
-            <!-- Add the datalist -->
-            <input id="room-name-input" type="text" class="form-control w-50" placeholder="Chat room name" aria-label="Room Name" list="games-list">
+            <input id="room-name-input" type="text" class="form-control w-50" placeholder="Chat room name" list="games-list">
             <datalist id="games-list">
                 {% for instance in help_table %}
                     <option value="{{ instance.game }}"></option>
@@ -102,8 +74,8 @@
 
 <!-- JS Scripts -->
 <script>
-    const user_id = document.getElementById('test_id')?.textContent;
-    console.log(user_id);
+    const user_id = {{ user_info.id | default('null') }};
+    console.log("Current user id:", user_id);
 
     document.querySelector('#room-name-input').focus();
     document.querySelector('#room-name-input').onkeyup = function(e) {
@@ -115,17 +87,10 @@
     document.querySelector('#room-name-submit').onclick = function(e) {
         const roomName = document.querySelector('#room-name-input').value.trim();
         if(roomName) {
-            window.location.pathname = '/aliens/chat/' + roomName;
+            window.location.pathname = `/aliens/chat/${roomName}`;
         }
     };
 </script>
-<script src="{% static 'aliens/help.js' %}"></script>
-{% endblock %}
 
-{% comment "" %}
-    From here we need to write the js to get the inputs and update the table without a page reload. Then we need to update the table
-    in the newly created model. We also need to write the python in the backend to gain access to all the information and display the table on load. 
-    Add a chat lobby element so that when I add the live chat, a user can just click the lobby and start getting help by anyone in the lobby 
-    Then later we can make it a friend only thing or other options 
-    I also still need to add the tictactoe game and the changes that go with it 
-    {% endcomment %}
+<script src="{{ help_js_url }}"></script>
+{% endblock %}

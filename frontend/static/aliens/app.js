@@ -43,3 +43,59 @@ document.addEventListener("click", (e) => {
 
   renderPage(endpoint, template, "main-content");
 });
+
+
+document.getElementById("login-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    try {
+        const res = await fetch("{{ login_url }}", {
+            method: "POST",
+            credentials: "include", // send cookies for session
+            body: formData
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            // Login successful, render home page
+            renderPage("{{ home_url }}", "index.njk", "main-content");
+        } else {
+            // Show error message
+            renderPage("{{ login_url }}", "login.njk", "main-content");
+        }
+    } catch (err) {
+        console.error("Login error:", err);
+    }
+});
+
+
+document.getElementById("register-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    try {
+        const res = await fetch("{{ register_url }}", {
+            method: "POST",
+            credentials: "include",
+            body: formData
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            // Registration successful, render home page
+            renderPage("{{ home_url }}", "index.njk", "main-content");
+        } else {
+            // Show error message, re-render register page
+            renderPage("{{ register_url }}", "register.njk", "main-content");
+        }
+    } catch (err) {
+        console.error("Registration error:", err);
+    }
+});

@@ -31,25 +31,33 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return JsonResponse ({
+                'success': True,
+                'username': user.username,
+                'message': f'{user.username} Logged in successfully'
+            })
         else:
-            return render(request, "aliens/login.html", {
+            return JsonResponse ({
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "aliens/login.html")
+        return JsonResponse ({
+            "login_url": "https://typinggame-production.up.railway.app/aliens/login/"
+        })
 
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return JsonResponse ({
+        'message': "Successfully logged out"
+    })
 
 
 def register(request):
     if request.method == "POST":
         username = request.POST["username"]
         gamertag = request.POST["gamertag"]
-        name = request.POST["real-name"]
+        name = request.POST["real_name"]
         country = request.POST["country"]
         email = request.POST["email"]
         profile_pic = request.FILES.get("image")
@@ -58,8 +66,9 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "aliens/register.html", {
-                "message": "Passwords must match."
+            return JsonResponse ({
+                'message': "Your passwords do not match",
+                'success': False
             })
 
         # Attempt to create new user
@@ -71,13 +80,15 @@ def register(request):
             user.profile_pic = profile_pic # Need to add this to the user model
             user.save()
         except IntegrityError:
-            return render(request, "aliens/register.html", {
-                "message": "Username already taken."
+            return JsonResponse ({
+                "message": "Username already taken.",
+                'success': False
             })
         login(request, user)
-        return HttpResponseRedirect(reverse("index"))
-    else:
-        return render(request, "aliens/register.html")
+        return JsonResponse({
+            'message': "You have successfully registered for a account",
+            'success': True
+        })
     
 def delete_account(request):
     # Code to delete account and everything that was created by that account
@@ -96,16 +107,16 @@ def delete_account(request):
 def index(request):
     user = request.user
     return JsonResponse({
-        "title": "Aliens",
+        "title": "Aliens Defender",
         "is_authenticated": user.is_authenticated,
         "username": user.username if user.is_authenticated else None,
-        "logout_url": "https://typinggame-production.up.railway.app/aliens/logout/",
+        "logout_url": "https://typinggame-production.up.railway.app/aliens/",
         "login_url": "https://typinggame-production.up.railway.app/aliens/login/",
         "register_url": "https://typinggame-production.up.railway.app/aliens/register/",
         "profile_url": f"https://typinggame-production.up.railway.app/aliens/profile/{user.id}/" if user.is_authenticated else None,
         "stats_url": f"https://typinggame-production.up.railway.app/aliens/stats/{user.id}/" if user.is_authenticated else None,
         "leaderboard_url": "https://typinggame-production.up.railway.app/aliens/leaderboard/",
-        "home_url": "https://typinggame-production.up.railway.app/aliens/home/",
+        "home_url": "https://typinggame-production.up.railway.app/aliens/",
         "help_url": "https://typinggame-production.up.railway.app/aliens/help/",
         "game_url": "https://typinggame-production.up.railway.app/aliens/game/"
     })
@@ -118,7 +129,12 @@ def room(request, room_name):
 
 # Play the game
 def game(request):
-    return render(request, "aliens/game.html")
+    user = request.user
+    return JsonResponse ({
+        "is_authenticated": True,
+        "user_id": user.id,
+        "gamestyle_url": "/static/aliens/gamestyle.css",
+    })
 
 # Help wanted table with links to a players profile
 def help_wanted(request):
@@ -128,9 +144,9 @@ def help_wanted(request):
         # Should add if the user is authenticated too
         # Need to add a check for the gamertag and username as the html readonly can be removed and the wrong username/gamertag can be sent
         data =json.loads(request.body)
-        gamertag = data.get('tableGamertag')
-        game = data.get('helpGame')
-        game_day = data.get('helpGameDay')
+        gamertag = data.get('table-gamertag')
+        game = data.get('table-help-game')
+        game_day = data.get('table-help-game-day')
         
         if user.gamertag != gamertag:
             return JsonResponse({"error": "Do not change your gamertag when submitting!, your account will now be deleted"}, status=400)
@@ -153,9 +169,10 @@ def help_wanted(request):
         
     user_info = request.user
     help_wanted_entries = HelpWantedTable.objects.all()
-    return render(request, "aliens/helpwanted.html", {
+    return JsonResponse ({
         'user_info': user_info,
         'help_table': help_wanted_entries,
+        "help_js_url": "/static/aliens/help.js"
     })
 
 # View the leaderboard
