@@ -1,6 +1,6 @@
 // Setup Nunjucks loader
 const env = new nunjucks.Environment(
-  new nunjucks.WebLoader("../../templates/aliens"), // path to .njk templates
+  new nunjucks.WebLoader("/templates/aliens"), // path to .njk templates relative to root folder
   { autoescape: true }
 );
 
@@ -22,5 +22,5 @@ async function renderPage(endpoint, templateName, targetId) {
 // Initial load
 document.addEventListener("DOMContentLoaded", () => {
     console.log('is this running?');
-    renderPage("typinggame-production.up.railway.app/aliens/", "index.njk", "main-content");
+    renderPage("typinggame-production.up.railway.app/aliens/", "layout.njk", "main-content");
 });
