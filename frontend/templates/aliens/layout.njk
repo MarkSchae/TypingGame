@@ -1,64 +1,54 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>{% block title %}Aliens{% endblock %}</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" crossorigin="anonymous">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-        <link href="{% static 'aliens/gamestyle.css' %}" rel="stylesheet">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
+<head>
+    <title>{% block title %}Aliens{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <link href="/static/aliens/gamestyle.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <body>
     <h1 class="text-center my-4">Alien Invaders</h1>
 
-    {% if user.is_authenticated %}
+    {% if is_authenticated %}
     <!-- Top nav row -->
     <div class="d-flex justify-content-between align-items-center mb-4 px-3">
-
-        <!-- Left side: signed in as -->
-        <p class="mb-0 text-muted"><strong>Signed in as {{ user.username }}</strong></p>
-
-        <!-- Right side: logout -->
+        <p class="mb-0 text-muted"><strong>Signed in as {{ username }}</strong></p>
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                <a class="nav-link nav-link-api" data-endpoint="{{ logout_url }}" data-template="home.njk">Log Out</a>
             </li>
         </ul>
-
-
     </div>
     {% else %}
     <div class="d-flex justify-content-end mb-4 px-3">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                <a class="nav-link nav-link-api" data-endpoint="{{ login_url }}" data-template="login.njk">Log In</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'register' %}">Register</a>
+                <a class="nav-link nav-link-api" data-endpoint="{{ register_url }}" data-template="register.njk">Register</a>
             </li>
         </ul>
     </div>
     {% endif %}
 
     <!-- Centered links for user pages -->
-    {% if user.is_authenticated %}
+    {% if is_authenticated %}
     <ul class="nav justify-content-center mb-4">
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'player_profile' user.id %}"><strong>{{ user.username }}</strong></a>
+            <a class="nav-link nav-link-api" data-endpoint="{{ profile_url }}" data-template="player_profile.njk"><strong>{{ username }}</strong></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'players_stats' user.id %}">Check your stats</a>
+            <a class="nav-link nav-link-api" data-endpoint="{{ stats_url }}" data-template="players_stats.njk">Check your stats</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'leaderboard' %}">All Time Rankings</a>
+            <a class="nav-link nav-link-api" data-endpoint="{{ leaderboard_url }}" data-template="leaderboard.njk">All Time Rankings</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'index' %}">Home</a>
+            <a class="nav-link nav-link-api" data-endpoint="{{ home_url }}" data-template="home.njk">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'help_wanted' %}">Help Board</a>
+            <a class="nav-link nav-link-api" data-endpoint="{{ help_url }}" data-template="help_wanted.njk">Help Board</a>
         </li>
     </ul>
     {% endif %}
@@ -67,11 +57,10 @@
 
     <!-- Bottom call-to-action -->
     <div class="d-flex justify-content-center mt-5">
-        <a href="{% url 'game' %}" class="btn btn-primary btn-lg cta-button">Play and save Humanity</a>
+        <a href="#" class="btn btn-primary btn-lg cta-button nav-link-api" 
+           data-endpoint="{{ game_url }}" data-template="game.njk">Play and save Humanity</a>
     </div>
 
-    {% block body %}
-    {% endblock %}
+    {% block body %}{% endblock %}
 </body>
-
 </html>

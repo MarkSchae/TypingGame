@@ -32,3 +32,14 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log('is this running?');
     renderPage("https://typinggame-production.up.railway.app/aliens/", "layout.njk", "main-content");
 });
+
+document.addEventListener("click", (e) => {
+  const link = e.target.closest(".nav-link-api");
+  if (!link) return;
+
+  e.preventDefault();
+  const endpoint = link.dataset.endpoint;
+  const template = link.dataset.template;
+
+  renderPage(endpoint, template, "main-content");
+});

@@ -2,7 +2,7 @@ from django.urls import path
 
 
 from . import views
-
+# Being used as api endpoinps from railway/aliens/endpoint_name
 urlpatterns = [
     path("", views.index, name="index"),
     path("compose_mail", views.compose_mail, name="compose_mail"),
