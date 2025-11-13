@@ -41,7 +41,7 @@ document.addEventListener("click", (e) => {
   const endpoint = link.dataset.endpoint;
   const template = link.dataset.template;
 
-  renderPage(endpoint, template, "main-content");
+  renderPage(endpoint, template, "page-content");
 });
 
 
@@ -62,10 +62,10 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
 
         if (data.success) {
             // Login successful, render home page
-            renderPage("{{ home_url }}", "index.njk", "main-content");
+            renderPage("{{ home_url }}", "index.njk", "page-content");
         } else {
             // Show error message
-            renderPage("{{ login_url }}", "login.njk", "main-content");
+            renderPage("{{ login_url }}", "login.njk", "page-content");
         }
     } catch (err) {
         console.error("Login error:", err);
