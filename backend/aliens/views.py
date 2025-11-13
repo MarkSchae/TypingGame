@@ -89,7 +89,9 @@ def register(request):
             'message': "You have successfully registered for a account",
             'success': True
         })
-    
+    return JsonResponse({
+        'messages': "Please register for a account, Do not use any real personal or sensitive data. This app is only for demo purposes at the moment"
+    })
 def delete_account(request):
     # Code to delete account and everything that was created by that account
     if request.method == 'DELETE':
