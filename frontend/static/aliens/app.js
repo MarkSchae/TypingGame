@@ -54,7 +54,7 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     try {
         const res = await fetch("{{ login_url }}", {
             method: "POST",
-            credentials: "include", // send cookies for session
+            //credentials: "include", // send cookies for session
             body: formData
         });
 
@@ -82,7 +82,7 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
     try {
         const res = await fetch("{{ register_url }}", {
             method: "POST",
-            credentials: "include",
+            //credentials: "include",
             body: formData
         });
 
