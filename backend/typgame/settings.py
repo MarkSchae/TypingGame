@@ -21,7 +21,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # Optional if your fetch uses credentials/cookies
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = False
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,7 +38,14 @@ MEDIA_ROOT = BASE_DIR / 'media'  # Directory where media files will be saved
 SECRET_KEY = 'django-insecure-h=q6!q6uk*l8$%8vr6b-bn!02*z#%@b)13b4hs3hrp5vx@3djh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+ALLOWED_HOSTS = ["https://typinggame-production.up.railway.app"]
+
+SESSION_COOKIE_SECURE = True        # cookie sent only over HTTPS
+SESSION_COOKIE_SAMESITE = "Lax"    # avoid sending cookie cross-site
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = "Lax"
 
 ALLOWED_HOSTS = ['*']
 

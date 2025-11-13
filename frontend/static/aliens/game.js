@@ -493,10 +493,10 @@ async function sendStatsToBackend(stats) {
     const userId = parseInt(playerId.getAttribute('data-stats-user-id'));
     console.log(userId);
     try {
-        const playerStatsResponse = await fetch(`/aliens/players_stats/${userId}`, {
+        const playerStatsResponse = await fetch(`https://typinggame-production.up.railway.app/aliens/players_stats/${userId}`, {
             method: 'PUT',
             headers: {
-                'X-CSRFToken': csrfToken
+                'Content-Type': 'application/json'
             },
 
             body: JSON.stringify({
@@ -523,6 +523,7 @@ async function sendStatsToBackend(stats) {
         // Handle the json response from the server
         const playerStatsData = await responseData.json();
         //const leaderboardData = await leaderboardResponse.json();
+        window.location.href = '/templates/aliens/stats.njk';
         console.log('Stats and leaderboard successfully updated:', playerStatsData);
     } catch (error) {
         console.error('Failed to send stats and leaderboard:', error);

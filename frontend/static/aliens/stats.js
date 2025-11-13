@@ -12,14 +12,13 @@ if (postForm) {
 async function updatePosts() { // This must now change to a post and the submit of the form must be stopped in the html
 
   const postContent = document.querySelector('#post_content-text').value;
-  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     try {
         // Update the leaderboard without requiring a page reload
         // Need to fetch the new data with the new rankins and skill ratings and manipulated the html to updating the already loaded div
-      const response = await fetch('/aliens/leaderboard', {
+      const response = await fetch('https://typinggame-production.up.railway.app/aliens/leaderboard', {
         method: 'POST',
         headers: {
-          'X-CSRFToken': csrfToken
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           // Key value pairs for the data in the posted form to add new posts/comments to the leaderboard
@@ -69,8 +68,9 @@ async function updateLeaderboard() {
   try {
       // Update the leaderboard without requiring a page reload
       // Need to fetch the new data with the new rankins and skill ratings and manipulated the html to updating the already loaded div
-    const response = await fetch('/aliens/leaderboard', {
+    const response = await fetch('https://typinggame-production.up.railway.app/aliens/leaderboard', {
       headers: {
+        'Content-Type': 'application/json',
         'X-Fetch-Leaderboard': 'FetchLeaderboard'
     }
     });
@@ -169,12 +169,10 @@ function compose_mail_form_submit(event) {
   const recipient = document.querySelector('#compose-recipients').value;
   const subject = document.querySelector('#compose-subject').value;
   const body = document.querySelector('#compose-body').value;
-  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-  fetch('/aliens/compose_mail', { //(fetching api)
+
+  fetch('https://typinggame-production.up.railway.app/aliens/compose_mail', { //(fetching api)
   method: 'POST', //(Posting the new mail to the view/url)
-    headers: {
-      'X-CSRFToken': csrfToken
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       // JSON data keys and values
       // Am I goin do async here or leave as normal fetch?
@@ -200,7 +198,7 @@ function load_mailbox(mailbox) {
   console.log("function is running");
   
   // Get to retrive emails from database
-  fetch(`/aliens/mails/${mailbox}`)
+  fetch(`https://typinggame-production.up.railway.app/aliens/mails/${mailbox}`)
   .then(response => response.json())
   .then(mails => {
     console.log(mails);
@@ -263,7 +261,7 @@ function load_mailbox(mailbox) {
 function handleEmailClick(mailId) {
   // Logic to show further details regarding the mail and to hide the other divs
   // Fetch request to get the further details of the mail
-  fetch(`/aliens/mails/${mailId}`)
+  fetch(`https://typinggame-production.up.railway.app/aliens/mails/${mailId}`)
   .then(response => response.json())
   .then(mail => {
     // Create reply button
@@ -315,8 +313,9 @@ function handleEmailClick(mailId) {
 
 // Update mail to be read
 function updateReadEmail(mailId) {
-  fetch(`/aliens/mails/${mailId}`, {
+  fetch(`https://typinggame-production.up.railway.app/aliens/mails/${mailId}`, {
     method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
         read: true
     })
@@ -382,7 +381,6 @@ document.querySelector('#confirm-update-btn').addEventListener('click', updatePr
 
 async function updateProfilePicture() {
   const fileInput = document.querySelector('#change-image'); // Get the file input element
-  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
   const userId = document.getElementById('user-id').getAttribute('data-user-id'); // Must make sure this works as it is better security than embeding in the html and retriving
   if (!fileInput.files || fileInput.files.length === 0) {
     console.error("No file selected!");
@@ -405,12 +403,10 @@ async function updateProfilePicture() {
       try {
           // Use 'await' to wait for the fetch request to complete
           // The response object holds the raw data from the servers response such as success codes and a stream of raw data
-          const response = await fetch(`/aliens/player_profile/${userId}`, {
+          const response = await fetch(`https://typinggame-production.up.railway.app/aliens/player_profile/${userId}`, {
             method: 'PUT',  // Send the request using PUT (could be POST)
+            headers: { 'Content-Type': 'application/json' },
             body: formData,  // Attach the FormData object containing the image
-            headers: {
-                'X-CSRFToken': csrfToken,  // Add the CSRF token for protection
-            },
           });
 
           const data = await response.json(); // Wait for the raw response data to be converted to JSON

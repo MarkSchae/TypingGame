@@ -3,64 +3,55 @@
 // Update the table on the backend in the python
 // The link to a persons profile page from the help table: they provide the gamertag, maybe match profile to gamertag and add the link to that profile
 
-// Retrive the inputs
-const helpInputs = document.querySelector('#help-table');
-if (helpInputs) {
-  document.querySelector('#help-table').addEventListener('submit', event => {
+// Retrive the inputs for the help wanted table and update real time
+const helpForm = document.querySelector('#help-table-form');
+if (helpForm) {
+  helpForm.addEventListener('submit', async event => {
     event.preventDefault();
-    updateHelpWantedTable();
-    // Clearing the existing text in the inputs (Is there a way to do this for multiple inputs at once?)
-    document.querySelector('.form-control').value = '';
+    await updateHelpWantedTable();
+    event.target.reset(); // clears all inputs at once
   });
 }
 
 async function updateHelpWantedTable() {
-    // Write the function to post the input data to the backend to save the model
-    // Update the table on the front end without a page reload when the json data returns from the backend, can also do this from the users inputs
-    // Find a way to match the gamertag to a users profile and add the link next to the help wanted add, then add a add/remove friend button
-  const gamertag = document.querySelector('input[name="table-gamertag"]').value;
-  const helpGame = document.querySelector('input[name="table-help-game"]').value;
-  const helpGameDay = document.querySelector('input[name="table-help-game-day"]').value;
-  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+  const gamertag = document.querySelector('input[name="table-gamertag"]').value.trim();
+  const helpGame = document.querySelector('input[name="table-help-game"]').value.trim();
+  const helpGameDay = document.querySelector('input[name="table-help-game-day"]').value.trim();
 
-    try {
-      const response = await fetch('/aliens/help_wanted', {
-        method: 'POST',
-        headers: {
-          'X-CSRFToken': csrfToken
-        },
-        body: JSON.stringify({
-          // Key value pairs for the data in the posted form to add new posts/comments to the leaderboard
-          tableGamertag: gamertag,
-          helpGame: helpGame,
-          helpGameDay: helpGameDay, 
-        })
-      });
-      // Write the code for getting the returned json and updating the table
-      // I did this for the leaderboard, maybe just use the same approach?
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+  try {
+    const response = await fetch('https://typinggame-production.up.railway.app/aliens/leaderboard', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'table-gamertag': gamertag,
+        'table-help-game': helpGame,
+        'table-help-game-day': helpGameDay
+      })
+    });
 
-      const data = await response.json();
-      helpTable = response.serialized_help_wanted_entries
-
-      const rowsHtml = helpTable.map(entry => `
-        <tr>
-          <td>${entry.gamertag}</td>
-          <td>${entry.game}</td>
-          <td>${entry.game_day}</td>
-          <td><a href="aliens/player_profile/${entry.user.id}/">Player's Profile</a></td>
-        </tr>
-      `).join('');
-      
-      document.querySelector('#help-wanted-table').innerHTML = rowsHtml;
-      
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.status}`);
     }
 
-    catch (error) {
-      console.log('message:', error);
-    }
+    const data = await response.json();
+    const helpTable = data.help_table;
+
+    const rowsHtml = helpTable.map(entry => `
+      <tr>
+        <td>${entry.gamertag}</td>
+        <td>${entry.game}</td>
+        <td>${entry.game_day}</td>
+        <td><a href="/aliens/player_profile/${entry.user_id}/">Player's Profile</a></td>
+      </tr>
+    `).join('');
+
+    document.querySelector('#help-table-body').innerHTML = rowsHtml;
+
+  } catch (error) {
+    console.error('Error updating help wanted table:', error);
+  }
 }
 
 // Incompass this entire script inside a querryselctor, maybe later

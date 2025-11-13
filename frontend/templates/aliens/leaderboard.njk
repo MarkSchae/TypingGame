@@ -1,6 +1,4 @@
-{% extends "aliens/layout.html" %}
-
-{% load static %}
+{% extends "aliens/layout.njk" %}
 
 {% block body %}
 <div class="container my-5">
@@ -22,7 +20,7 @@
                     <tr>
                         <td>{{ instance.rank }}</td>
                         <td>
-                            <a href="{% url 'player_profile' instance.user.id %}" class="text-decoration-none fw-bold">
+                            <a href="/aliens/profile/{{ instance.user.id }}/" class="text-decoration-none fw-bold">
                                 {{ instance.user.gamertag }}
                             </a>
                         </td>
@@ -36,10 +34,10 @@
     <!-- New Post Section -->
     <div class="mt-5">
         <h2>New Post</h2>
-        <form method="post" action="{% url 'leaderboard' %}" class="mb-4">
-            {% csrf_token %}
+        <form id="new-post-form" class="mb-4">
             <div class="mb-3">
-                {{ form.as_p }}
+                <label for="post_content-text">Post Content</label>
+                <textarea id="post_content-text" name="post_content" rows="4" cols="50" class="form-control"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Post</button>
         </form>
@@ -48,19 +46,19 @@
     <!-- Posts/Comments Section -->
     <div class="mt-5">
         <h2>Posts / Comments</h2>
-        {% if posts %}
+        {% if posts.length %}
             <ul class="list-group">
                 {% for post in posts %}
                     <li class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start mb-2 shadow-sm">
                         <div>
                             <strong>
-                                <a href="{% url 'player_profile' post.user.id %}" class="text-decoration-none">
+                                <a href="/aliens/profile/{{ post.user.id }}/" class="text-decoration-none">
                                     {{ post.user.gamertag }}
                                 </a>
                             </strong>
                             <p class="mb-1">{{ post.content }}</p>
                         </div>
-                        <small class="text-muted">{{ post.created_at|date:"M d, Y H:i" }}</small>
+                        <small class="text-muted">{{ post.created_at }}</small>
                     </li>
                 {% endfor %}
             </ul>
@@ -71,5 +69,6 @@
 
 </div>
 
-<script src="{% static 'aliens/stats.js' %}"></script>
+<script src="/static/aliens/stats.js"></script>
+
 {% endblock %}

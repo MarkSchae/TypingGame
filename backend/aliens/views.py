@@ -160,19 +160,14 @@ def help_wanted(request):
             help_wanted_entry = HelpWantedTable(user=user, gamertag=gamertag, game=game, game_day=game_day)
             help_wanted_entry.save()
         
-        # Now we must return a successful json response with the serialized table so that we can make changes in the js on the front-end 
-        help_wanted_entries = HelpWantedTable.objects.all()
-        serialized_help_wanted_entries = [entry.help_wanted_table_serialize() for entry in help_wanted_entries]
-        
-        return JsonResponse(serialized_help_wanted_entries, safe=False)
-        
-        
-    user_info = request.user
+    # Now we must return a successful json response with the serialized table so that we can make changes in the js on the front-end 
     help_wanted_entries = HelpWantedTable.objects.all()
+    serialized_help_wanted_entries = [entry.help_wanted_table_serialize() for entry in help_wanted_entries]
+        
     return JsonResponse ({
-        'user_info': user_info,
-        'help_table': help_wanted_entries,
-        "help_js_url": "/static/aliens/help.js"
+        'user_info': user,
+        'help_table': serialized_help_wanted_entries,
+        "help_js_url": "/static/aliens/help.js",
     })
 
 # View the leaderboard
@@ -229,9 +224,8 @@ def leaderboard(request):
     sorted_leaderboard = Leaderboard.objects.order_by('-user_skill_rating').all()
     ranking()
     posts = Post.objects.order_by('-created_at').all()
-    return render(request, "aliens/leaderboard.html", {
+    return JsonResponse({
         "sorted_leaderboard": sorted_leaderboard,
-        "form": PostForm(),
         "posts": posts
     })
 
@@ -240,6 +234,7 @@ def leaderboard(request):
 # Going to start with boiler plate profile view and leave space to edit and add the extras
 # Try to allow players viewing a profile to watch that player play the game and comment in real time
 def player_profile(request, user_id):
+    # Updates to the profile information
     if request.method == 'PUT':
         request.upload_handlers = [TemporaryFileUploadHandler()]  # Ensure file upload is handled
         parser = MultiPartParser(request.META, request, request.upload_handlers)
@@ -262,7 +257,7 @@ def player_profile(request, user_id):
     onclick_user_profile = User.objects.get(id=user_id)
     mails = Mail.objects.all()
     
-    return render(request, "aliens/profile.html", { # This is called the context
+    return JsonResponse({ # This is called the context
         # Username that is used for security along with the password (Use mail for recovery)
         # Gamertag which is what others see, must also be unique
         # Name, which is the persons actual name and does not need to be unique as it wont be used for security
@@ -306,7 +301,9 @@ def players_stats(request, user_id):
     # Retrive the stats from the frontend first
     if request.method == 'PUT':
         if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse("aliens/index.html"))
+            return JsonResponse({
+                'messages': "You have to be registered"
+            })
         user = request.user
         # Check that the data coming in is from the same user that is currently logged on and playing
         # Do not forget to handle for if the users are not the same
@@ -364,9 +361,11 @@ def players_stats(request, user_id):
         player_stats = Stats.objects.get(user=user_id)
     except Stats.DoesNotExist:
         messages.error(request, "You have no stats yet, get playing!")
-        return HttpResponseRedirect(reverse('index'))
+        return JsonResponse ({
+            'messages': messages 
+        })
     
-    return render(request, "aliens/stats.html", { # This is called the context
+    return JsonResponse({ # This is called the context
         # Show stats for the specific person that the user typed into the search bar(maybe only friends but then I must find out how to add friends etc, could just be a database field thing)
         # Render: friend name, place on leaderboard, stats from model 
         # K/D ratio

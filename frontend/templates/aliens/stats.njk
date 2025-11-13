@@ -1,10 +1,15 @@
-{% extends "aliens/layout.html" %}
+{% extends "aliens/layout.njk" %}
 
-{% load static %}
 {% block body %}
 <div class="container my-5">
 
     <h1 class="text-center mb-4">Player Stats</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div>{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -42,5 +47,6 @@
 
 </div>
 
-<script src="{% static 'aliens/game.js' %}"></script>
+<script src="/static/aliens/game.js"></script>
+
 {% endblock %}
