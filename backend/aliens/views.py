@@ -19,7 +19,7 @@ from .models import User, Post, Stats, Leaderboard, Mail, HelpWantedTable
 
 class PostForm(forms.Form):
     post_content = forms.CharField(label="Post Content", widget=forms.Textarea(attrs={'id': 'post_content-text','rows': 4, 'cols': 50}))
-
+@csrf_exempt
 def login_view(request):
     if request.method == "POST":
 
@@ -52,7 +52,7 @@ def logout_view(request):
         'message': "Successfully logged out"
     })
 
-
+@csrf_exempt
 def register(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -92,6 +92,7 @@ def register(request):
     return JsonResponse({
         'messages': "Please register for a account, Do not use any real personal or sensitive data. This app is only for demo purposes at the moment"
     })
+
 def delete_account(request):
     # Code to delete account and everything that was created by that account
     if request.method == 'DELETE':
@@ -139,6 +140,7 @@ def game(request):
     })
 
 # Help wanted table with links to a players profile
+@csrf_exempt
 def help_wanted(request):
     user = request.user
     # If post from js file. Convert json into python dict. Save the variables into python variables. Save the varialbes into model fields
@@ -173,6 +175,7 @@ def help_wanted(request):
     })
 
 # View the leaderboard
+@csrf_exempt
 def leaderboard(request):
     # Handle the post on the leaderboard page being submitted
     if request.method == 'POST':
@@ -235,6 +238,7 @@ def leaderboard(request):
 # Maybe a SPA so once registered the user is prompted to set up the profile with their name and irl details for whatever reason (friends)
 # Going to start with boiler plate profile view and leave space to edit and add the extras
 # Try to allow players viewing a profile to watch that player play the game and comment in real time
+@csrf_exempt
 def player_profile(request, user_id):
     # Updates to the profile information
     if request.method == 'PUT':
@@ -295,6 +299,7 @@ def ranking():
     return True
 # Display stats in differnet ways using charts etc from a third part api like py.chart or whatever
 # View your/other users stats page have to add a href for clicking on others stats
+@csrf_exempt
 def players_stats(request, user_id):
     # Might write some functionality to temp store stats for users with no account and if they register then save the data
     # if !user.authenticated show messge temp store redirect to register, if they do register save the data else just redirect
@@ -385,6 +390,7 @@ def players_stats(request, user_id):
 # Sending messages(trach talk)/challenges that is used as the text for the levels
 # Might try to make the trash talk in real time whilst watching another users game in a head to head etc
 # Maybe have the compose form in the profile page and just do a SPA with that and the inbox/sent
+@csrf_exempt
 def compose_mail(request): # Must add the accompanying js to handle the posting of the mail or must add the post method to the form
     # Composing a new mail must be via POST
     if request.method != "POST":
@@ -458,6 +464,7 @@ def mailbox(request, mailbox):
     emails = emails.order_by("-timestamp").all()
     return JsonResponse([mail.serialize() for mail in emails], safe=False)
 
+@csrf_exempt
 def mail_details(request, mail_id):
 
     # Query for requested mail
