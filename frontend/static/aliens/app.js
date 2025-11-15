@@ -53,7 +53,7 @@ document.addEventListener("submit", async (e) => {
         const formData = new FormData(form);
 
         try {
-            const res = await fetch("{{ login_url }}", {
+            const res = await fetch("https://typinggame-production.up.railway.app/aliens/login", {
                 method: "POST",
                 //credentials: "include", // send cookies for session
                 body: formData
@@ -83,7 +83,7 @@ document.addEventListener("submit", async (e) => {
         const formData = new FormData(form);
 
         try {
-            const res = await fetch("{{ register_url }}", {
+            const res = await fetch("https://typinggame-production.up.railway.app/aliens/register", {
                 method: "POST",
                 //credentials: "include",
                 body: formData
