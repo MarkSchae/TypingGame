@@ -15,7 +15,7 @@
          This site is for demonstration purposes only.
     </h1>
 
-    {% if is_authenticated === "true" %}
+    {% if is_authenticated == true %}
     <!-- Top nav row -->
     <div class="d-flex justify-content-between align-items-center mb-4 px-3">
         <p class="mb-0 text-muted"><strong>Signed in as {{ username }}</strong></p>
@@ -39,7 +39,7 @@
     {% endif %}
 
     <!-- Centered links for user pages -->
-    {% if is_authenticated === "true" %}
+    {% if is_authenticated == true %}
     <ul class="nav justify-content-center mb-4">
         <li class="nav-item">
             <a class="nav-link nav-link-api" data-endpoint="{{ profile_url }}" data-template="player_profile.njk"><strong>{{ username }}</strong></a>
