@@ -66,7 +66,6 @@ document.addEventListener("submit", async (e) => {
             if (data.success) {
                 // Login successful, render home page
                 renderPage("https://typinggame-production.up.railway.app/aliens/", "index.njk", "page-content");
-                renderPage("https://typinggame-production.up.railway.app/aliens/", "layout.njk", "main-content");
             } else {
                 // Show error message
                 renderPage("https://typinggame-production.up.railway.app/aliens/login", "login.njk", "page-content");
