@@ -63,10 +63,10 @@ document.addEventListener("submit", async (e) => {
 
             if (data.success) {
                 // Login successful, render home page
-                renderPage("{{ home_url }}", "index.njk", "page-content");
+                renderPage("https://typinggame-production.up.railway.app/aliens/", "index.njk", "page-content");
             } else {
                 // Show error message
-                renderPage("{{ login_url }}", "login.njk", "page-content");
+                renderPage("https://typinggame-production.up.railway.app/aliens/login", "login.njk", "page-content");
             }
         } catch (err) {
             console.error("Login error:", err);
