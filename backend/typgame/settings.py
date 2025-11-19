@@ -43,11 +43,11 @@ DEBUG = False
 ALLOWED_HOSTS = ["https://typinggame-production.up.railway.app"]
 
 SESSION_COOKIE_SECURE = True        # cookie sent only over HTTPS
-SESSION_COOKIE_SAMESITE = "Lax"    # avoid sending cookie cross-site
+SESSION_COOKIE_SAMESITE = "None"    
 CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = "None"
 
-
+#ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
