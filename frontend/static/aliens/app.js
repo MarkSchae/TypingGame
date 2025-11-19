@@ -8,7 +8,9 @@ async function renderPage(endpoint, templateName, targetId) {
   console.log("Fetching from:", endpoint);
 
   try {
-    const res = await fetch(endpoint);
+    const res = await fetch(endpoint, {
+        credentials: "include", // send cookies for session
+    });
     console.log("Response status:", res.status);
 
     if (!res.ok) {
@@ -55,7 +57,7 @@ document.addEventListener("submit", async (e) => {
         try {
             const res = await fetch("https://typinggame-production.up.railway.app/aliens/login", {
                 method: "POST",
-                //credentials: "include", // send cookies for session
+                credentials: "include", // send cookies for session
                 body: formData
             });
 
@@ -85,7 +87,7 @@ document.addEventListener("submit", async (e) => {
         try {
             const res = await fetch("https://typinggame-production.up.railway.app/aliens/register", {
                 method: "POST",
-                //credentials: "include",
+                credentials: "include",
                 body: formData
             });
 

@@ -22,7 +22,8 @@ async function updateHelpWantedTable() {
     const response = await fetch('https://typinggame-production.up.railway.app/aliens/leaderboard', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        credentials: "include", // send cookies for session
       },
       body: JSON.stringify({
         'table-gamertag': gamertag,
