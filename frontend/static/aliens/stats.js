@@ -17,6 +17,7 @@ async function updatePosts() { // This must now change to a post and the submit 
         // Need to fetch the new data with the new rankins and skill ratings and manipulated the html to updating the already loaded div
       const response = await fetch('https://typinggame-production.up.railway.app/aliens/leaderboard', {
         method: 'POST',
+        credentials: "include", // send cookies for session
         headers: {
           'Content-Type': 'application/json'
         },

@@ -45,7 +45,7 @@ def login_view(request):
             "login_url": "https://typinggame-production.up.railway.app/aliens/login/"
         })
 
-
+@csrf_exempt
 def logout_view(request):
     logout(request)
     return JsonResponse ({
@@ -92,7 +92,7 @@ def register(request):
     return JsonResponse({
         'messages': "Please register for a account, Do not use any real personal or sensitive data. This app is only for demo purposes at the moment"
     })
-
+@csrf_exempt
 def delete_account(request):
     # Code to delete account and everything that was created by that account
     if request.method == 'DELETE':
@@ -105,7 +105,7 @@ def delete_account(request):
             return JsonResponse({"message": "You are not logged in!"}, status=403)
     else:
         return JsonResponse({"message": "Invalid request method"}, status=400)
-
+@csrf_exempt
 # Create your views here.
 def index(request):
     user = request.user
@@ -123,13 +123,13 @@ def index(request):
         "help_url": "https://typinggame-production.up.railway.app/aliens/help",
         "game_url": "https://typinggame-production.up.railway.app/aliens/game"
     })
-
+@csrf_exempt
 # Websockets test chat room raw functionality
 def room(request, room_name):
     return render(request, "aliens/room.html", {
         "room_name": room_name
     })
-
+@csrf_exempt
 # Play the game
 def game(request):
     user = request.user
@@ -445,7 +445,7 @@ def compose_mail(request): # Must add the accompanying js to handle the posting 
         mail.save()
 
     return JsonResponse({"message": "Mail sent successfully."}, status=201)
-
+@csrf_exempt
 def mailbox(request, mailbox):
 
     # Filter mails returned based on mailbox button controled by js
