@@ -21,7 +21,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # Optional if your fetch uses credentials/cookies
-CORS_ALLOW_CREDENTIALS = False
+CORS_ALLOW_CREDENTIALS = True
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,8 +46,6 @@ SESSION_COOKIE_SECURE = True        # cookie sent only over HTTPS
 SESSION_COOKIE_SAMESITE = "Lax"    # avoid sending cookie cross-site
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = "Lax"
-
-ALLOWED_HOSTS = ['*']
 
 
 # Application definition
