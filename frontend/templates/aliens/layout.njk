@@ -21,7 +21,7 @@
         <p class="mb-0 text-muted"><strong>Signed in as {{ username }}</strong></p>
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link nav-link-api" data-endpoint="{{ logout_url }}" data-template="home.njk">Log Out</a>
+                <a class="nav-link nav-link-api" data-endpoint="{{ logout_url }}" data-template="layout.njk">Log Out</a>
             </li>
         </ul>
     </div>
@@ -42,19 +42,19 @@
     {% if is_authenticated == true %}
     <ul class="nav justify-content-center mb-4">
         <li class="nav-item">
-            <a class="nav-link nav-link-api" data-endpoint="{{ profile_url }}" data-template="player_profile.njk"><strong>{{ username }}</strong></a>
+            <a class="nav-link nav-link-api" data-endpoint="{{ profile_url }}" data-template="profile.njk"><strong>{{ username }}</strong></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link nav-link-api" data-endpoint="{{ stats_url }}" data-template="players_stats.njk">Check your stats</a>
+            <a class="nav-link nav-link-api" data-endpoint="{{ stats_url }}" data-template="stats.njk">Check your stats</a>
         </li>
         <li class="nav-item">
             <a class="nav-link nav-link-api" data-endpoint="{{ leaderboard_url }}" data-template="leaderboard.njk">All Time Rankings</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link nav-link-api" data-endpoint="{{ home_url }}" data-template="home.njk">Home</a>
+            <a class="nav-link nav-link-api" data-endpoint="{{ home_url }}" data-template="index.njk">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link nav-link-api" data-endpoint="{{ help_url }}" data-template="help_wanted.njk">Help Board</a>
+            <a class="nav-link nav-link-api" data-endpoint="{{ help_url }}" data-template="helpwanted.njk">Help Board</a>
         </li>
     </ul>
     {% endif %}
