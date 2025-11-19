@@ -113,14 +113,14 @@ def index(request):
         "title": "Aliens Defender",
         "is_authenticated": user.is_authenticated,
         "username": user.username if user.is_authenticated else None,
-        "logout_url": "https://typinggame-production.up.railway.app/aliens/",
+        "logout_url": "https://typinggame-production.up.railway.app/aliens/logout",
         "login_url": "https://typinggame-production.up.railway.app/aliens/login",
         "register_url": "https://typinggame-production.up.railway.app/aliens/register",
         "profile_url": f"https://typinggame-production.up.railway.app/aliens/profile/{user.id}/" if user.is_authenticated else None,
         "stats_url": f"https://typinggame-production.up.railway.app/aliens/stats/{user.id}/" if user.is_authenticated else None,
         "leaderboard_url": "https://typinggame-production.up.railway.app/aliens/leaderboard",
         "home_url": "https://typinggame-production.up.railway.app/aliens/",
-        "help_url": "https://typinggame-production.up.railway.app/aliens/help",
+        "help_url": "https://typinggame-production.up.railway.app/aliens/help_wanted",
         "game_url": "https://typinggame-production.up.railway.app/aliens/game"
     })
 @csrf_exempt
