@@ -363,8 +363,9 @@ def players_stats(request, user_id):
             # Update the users current rank for display
             player_stats.current_position_leaderboard = updated_leaderboard.rank 
             # Return JsonResponse here, needs to first be serialized and include a success message
-            
+    
     try:
+        user = request.user
         player_stats = Stats.objects.get(user=user_id)
     except Stats.DoesNotExist:
         messages.error(request, "You have no stats yet, get playing!")
