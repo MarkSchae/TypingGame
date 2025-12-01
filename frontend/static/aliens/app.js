@@ -95,10 +95,10 @@ document.addEventListener("submit", async (e) => {
 
             if (data.success) {
                 // Registration successful, render home page
-                renderPage("https://typinggame-production.up.railway.app/aliens/", "index.njk", "main-content");
+                renderPage("https://typinggame-production.up.railway.app/aliens/", "index.njk", "page-content");
             } else {
                 // Show error message, re-render register page
-                renderPage("https://typinggame-production.up.railway.app/aliens/register", "register.njk", "main-content");
+                renderPage("https://typinggame-production.up.railway.app/aliens/register", "register.njk", "page-content");
             }
         } catch (err) {
             console.error("Registration error:", err);
