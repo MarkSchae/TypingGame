@@ -137,6 +137,7 @@ def game(request):
         "is_authenticated": True,
         "user_id": user.id,
         "gamestyle_url": "/static/aliens/gamestyle.css",
+        "gamejs_url": "/static/aliens/game.js",
     })
 
 # Help wanted table with links to a players profile
@@ -233,7 +234,8 @@ def leaderboard(request):
     serialized_posts = [post.post_serialize() for post in posts]
     return JsonResponse({
         "sorted_leaderboard": serialized_leaderboard,
-        "posts": serialized_posts
+        "posts": serialized_posts,
+        "stats_js_url": "/static/aliens/stats.js",
     })
 
 # View your(user) and other users profile. Must be able to view others profile too
@@ -278,7 +280,8 @@ def player_profile(request, user_id):
         # Comments on profile
         "onclick_user_profile" : onclick_user_profile.user_serialize(),
         "current_logged_on_user": current_logged_on_user.user_serialize(),
-        "mails": serialized_mails,   
+        "mails": serialized_mails,  
+        "stats_js_url": "/static/aliens/stats.js", 
     })
 
 # Function to calculate a helo type of ranking system for the leaderboard
@@ -380,6 +383,7 @@ def players_stats(request, user_id):
         # Render: friend name, place on leaderboard, stats from model 
         # K/D ratio
         "player_stats": player_stats.stats_serialize(),
+        "stats_js_url": "/static/aliens/stats.js",
         # Total Kills all time
         # Head to head with friends/rival
         # Total games played/hours played
