@@ -276,8 +276,8 @@ def player_profile(request, user_id):
         # Rivals
         # Achievements 
         # Comments on profile
-        "onclick_user_profile" : onclick_user_profile.user_serialize,
-        "current_logged_on_user": current_logged_on_user.user_serialize,
+        "onclick_user_profile" : onclick_user_profile.user_serialize(),
+        "current_logged_on_user": current_logged_on_user.user_serialize(),
         "mails": serialized_mails,   
     })
 
@@ -379,7 +379,7 @@ def players_stats(request, user_id):
         # Show stats for the specific person that the user typed into the search bar(maybe only friends but then I must find out how to add friends etc, could just be a database field thing)
         # Render: friend name, place on leaderboard, stats from model 
         # K/D ratio
-        "player_stats": player_stats.stats_serialize,
+        "player_stats": player_stats.stats_serialize(),
         # Total Kills all time
         # Head to head with friends/rival
         # Total games played/hours played
