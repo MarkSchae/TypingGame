@@ -116,8 +116,8 @@ def index(request):
         "logout_url": "https://typinggame-production.up.railway.app/aliens/logout",
         "login_url": "https://typinggame-production.up.railway.app/aliens/login",
         "register_url": "https://typinggame-production.up.railway.app/aliens/register",
-        "profile_url": f"https://typinggame-production.up.railway.app/aliens/player_profile/{user.id}/" if user.is_authenticated else None,
-        "stats_url": f"https://typinggame-production.up.railway.app/aliens/players_stats/{user.id}/" if user.is_authenticated else None,
+        "profile_url": f"https://typinggame-production.up.railway.app/aliens/player_profile/{user.id}" if user.is_authenticated else None,
+        "stats_url": f"https://typinggame-production.up.railway.app/aliens/players_stats/{user.id}" if user.is_authenticated else None,
         "leaderboard_url": "https://typinggame-production.up.railway.app/aliens/leaderboard",
         "home_url": "https://typinggame-production.up.railway.app/aliens/",
         "help_url": "https://typinggame-production.up.railway.app/aliens/help_wanted",
@@ -169,7 +169,7 @@ def help_wanted(request):
     serialized_help_wanted_entries = [entry.help_wanted_table_serialize() for entry in help_wanted_entries]
         
     return JsonResponse ({
-        'user_info': user,
+        'user_info': user.user_serialize,
         'help_table': serialized_help_wanted_entries,
         "help_js_url": "/static/aliens/help.js",
     })
