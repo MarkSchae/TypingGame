@@ -32,7 +32,7 @@ async function renderPage(endpoint, templateName, targetId) {
 // Initial load
 document.addEventListener("DOMContentLoaded", () => {
     console.log('is this running?');
-    renderPage("https://typinggame-production.up.railway.app/aliens/", "layout.njk", "page-content");
+    renderPage("https://typinggame-production.up.railway.app/aliens/", "layout.njk", "main-content");
 });
 
 document.addEventListener("click", (e) => {
@@ -95,10 +95,10 @@ document.addEventListener("submit", async (e) => {
 
             if (data.success) {
                 // Registration successful, render home page
-                renderPage("https://typinggame-production.up.railway.app/aliens/", "index.njk", "page-content");
+                renderPage("https://typinggame-production.up.railway.app/aliens/", "index.njk", "main-content");
             } else {
                 // Show error message, re-render register page
-                renderPage("https://typinggame-production.up.railway.app/aliens/register", "register.njk", "page-content");
+                renderPage("https://typinggame-production.up.railway.app/aliens/register", "register.njk", "main-content");
             }
         } catch (err) {
             console.error("Registration error:", err);
