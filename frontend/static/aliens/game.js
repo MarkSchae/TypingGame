@@ -495,6 +495,7 @@ function initGame () {
         try {
             const playerStatsResponse = await fetch(`https://typinggame-production.up.railway.app/aliens/players_stats/${userId}`, {
                 method: 'PUT',
+                credentials: "include",
                 headers: {
                     'Content-Type': 'application/json'
                 },

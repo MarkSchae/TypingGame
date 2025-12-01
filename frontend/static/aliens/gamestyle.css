@@ -110,12 +110,12 @@
     border-radius: 5px;
 }
 
-/* #bullets-container {
+#bullets-container {
     position: absolute;
     top: 50px;
     left: 10px;
     font-size: 20px;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(178, 7, 231, 0.8);
     padding: 5px 10px;
     border-radius: 5px;
 }
@@ -125,10 +125,10 @@
     top: 90px;
     left: 10px;
     font-size: 20px;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(255, 0, 0, 0.8);
     padding: 5px 10px;
     border-radius: 5px;
-}*/
+}
 
 #button-container {
     position: absolute;
