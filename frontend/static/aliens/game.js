@@ -521,7 +521,7 @@ function initGame () {
                 throw new Error('Network response was not ok');
             }
             // Handle the json response from the server
-            const playerStatsData = await responseData.json();
+            const playerStatsData = await playerStatsResponse.json();
             //const leaderboardData = await leaderboardResponse.json();
             window.location.href = '/templates/aliens/stats.njk';
             console.log('Stats and leaderboard successfully updated:', playerStatsData);

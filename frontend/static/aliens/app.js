@@ -45,8 +45,8 @@ document.addEventListener("click", (e) => {
 
     renderPage(endpoint, template, "page-content").then(() => {
         // Call the correct init function based on the template
-        if (template === "game.njk") initGame();
-/*         else if (template === "stats.njk") initStats();
+        if (template === "game.njk") initGame(), initStats();
+/*         else if (template === "stats.njk" || template === "leaderboard.njk") initStats();
         else if (template === "helpwanted.njk") initHelp(); */
     });
 });

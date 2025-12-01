@@ -81,7 +81,7 @@
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(100, 119, 121, 0.8);
     padding: 10px;
     border-radius: 10px;
     width: 100%;
@@ -97,6 +97,7 @@
 
 #game-canvas {
     border: 2px solid #fff;
+    background-color: #000;
 }
 
 #health-container, #bullets-container, #kills-container {
@@ -104,12 +105,12 @@
     top: 10px;
     left: 10px;
     font-size: 20px;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(46, 164, 52, 0.8);
     padding: 5px 10px;
     border-radius: 5px;
 }
 
-#bullets-container {
+/* #bullets-container {
     position: absolute;
     top: 50px;
     left: 10px;
@@ -127,26 +128,26 @@
     background: rgba(0, 0, 0, 0.8);
     padding: 5px 10px;
     border-radius: 5px;
-}
+}*/
 
 #button-container {
     position: absolute;
     bottom: 100px;
     right: 10px;
-}
+} 
 
 #next-level-button, #previous-level-button {
     font-size: 16px;
     padding: 10px;
     margin: 5px;
-    background-color: #444;
+    background-color: #310863;
     color: white;
     border: none;
     cursor: pointer;
 }
 
 #next-level-button:hover, #previous-level-button:hover {
-    background-color: #666;
+    background-color: #fa03f6;
 }
 
 #upgrade-container {
