@@ -227,11 +227,13 @@ def leaderboard(request):
     
     # Sort leaderboard and display
     sorted_leaderboard = Leaderboard.objects.order_by('-user_skill_rating').all()
+    serialized_leaderboard = [entry.leaderboard_serialize() for entry in sorted_leaderboard]
     ranking()
     posts = Post.objects.order_by('-created_at').all()
+    serialized_posts = [post.post_serialize() for post in posts]
     return JsonResponse({
-        "sorted_leaderboard": sorted_leaderboard,
-        "posts": posts
+        "sorted_leaderboard": serialized_leaderboard,
+        "posts": serialized_posts
     })
 
 # View your(user) and other users profile. Must be able to view others profile too
@@ -259,9 +261,12 @@ def player_profile(request, user_id):
             return JsonResponse({'success': False, 'message': 'No image provided'})
     # Username:
     current_logged_on_user = request.user
+    serialized_current_user = [entry.user_serialize() for entry in current_logged_on_user]
     # Retrieve the user based on the username provided via the js file
     onclick_user_profile = User.objects.get(id=user_id)
-    mails = Mail.objects.all()
+    serialized_user = [entry.user_serialize() for entry in onclick_user_profile]
+    mails = Mail.objects.all() 
+    serialized_mails = [entry.serialize() for entry in mails]
     
     return JsonResponse({ # This is called the context
         # Username that is used for security along with the password (Use mail for recovery)
@@ -273,9 +278,9 @@ def player_profile(request, user_id):
         # Rivals
         # Achievements 
         # Comments on profile
-        "onclick_user_profile" : onclick_user_profile,
-        "current_logged_on_user": current_logged_on_user,
-        "mails": mails,   
+        "onclick_user_profile" : serialized_user,
+        "current_logged_on_user": serialized_current_user,
+        "mails": serialized_mails,   
     })
 
 # Function to calculate a helo type of ranking system for the leaderboard
@@ -368,16 +373,15 @@ def players_stats(request, user_id):
         user = request.user
         player_stats = Stats.objects.get(user=user_id)
     except Stats.DoesNotExist:
-        messages.error(request, "You have no stats yet, get playing!")
         return JsonResponse ({
-            'messages': messages 
+            'messages': "You have no stats yet, get playing!"
         })
     
     return JsonResponse({ # This is called the context
         # Show stats for the specific person that the user typed into the search bar(maybe only friends but then I must find out how to add friends etc, could just be a database field thing)
         # Render: friend name, place on leaderboard, stats from model 
         # K/D ratio
-        "player_stats": player_stats,
+        "player_stats": player_stats.stats_serialize,
         # Total Kills all time
         # Head to head with friends/rival
         # Total games played/hours played

@@ -9,6 +9,17 @@ class User(AbstractUser):
     gamertag = models.CharField(max_length=64)
     country = models.CharField(max_length=64)
     profile_pic = models.ImageField(upload_to='profile_pics/', null=True, blank=True, default='static/aliens/spongebob.jpg')
+    
+    def user_serialize(self):
+        return {
+            "id": self.id,
+            "username": self.username,       # inherited from AbstractUser
+            "name": self.name,
+            "gamertag": self.gamertag,
+            "country": self.country,
+            # Use URL for profile picture if it exists
+            "profile_pic": self.profile_pic.url if self.profile_pic else None
+        }
 
 class Stats(models.Model):
     # All time kills .
