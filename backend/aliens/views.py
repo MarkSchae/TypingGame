@@ -261,10 +261,8 @@ def player_profile(request, user_id):
             return JsonResponse({'success': False, 'message': 'No image provided'})
     # Username:
     current_logged_on_user = request.user
-    serialized_current_user = [entry.user_serialize() for entry in current_logged_on_user]
     # Retrieve the user based on the username provided via the js file
     onclick_user_profile = User.objects.get(id=user_id)
-    serialized_user = [entry.user_serialize() for entry in onclick_user_profile]
     mails = Mail.objects.all() 
     serialized_mails = [entry.serialize() for entry in mails]
     
@@ -278,8 +276,8 @@ def player_profile(request, user_id):
         # Rivals
         # Achievements 
         # Comments on profile
-        "onclick_user_profile" : serialized_user,
-        "current_logged_on_user": serialized_current_user,
+        "onclick_user_profile" : onclick_user_profile.user_serialize,
+        "current_logged_on_user": current_logged_on_user.user_serialize,
         "mails": serialized_mails,   
     })
 
