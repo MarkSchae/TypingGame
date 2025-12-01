@@ -43,7 +43,12 @@ document.addEventListener("click", (e) => {
   const endpoint = link.dataset.endpoint;
   const template = link.dataset.template;
 
-  renderPage(endpoint, template, "page-content");
+    renderPage(endpoint, template, "page-content").then(() => {
+        // Call the correct init function based on the template
+        if (template === "game.njk") initGame();
+/*         else if (template === "stats.njk") initStats();
+        else if (template === "helpwanted.njk") initHelp(); */
+    });
 });
 
 
