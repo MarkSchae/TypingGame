@@ -169,7 +169,7 @@ def help_wanted(request):
     serialized_help_wanted_entries = [entry.help_wanted_table_serialize() for entry in help_wanted_entries]
         
     return JsonResponse ({
-        'user_info': user.user_serialize,
+        'user_info': user.user_serialize(),
         'help_table': serialized_help_wanted_entries,
         "help_js_url": "/static/aliens/help.js",
     })
